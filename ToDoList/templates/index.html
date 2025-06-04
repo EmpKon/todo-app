@@ -4,6 +4,7 @@
     <script src="mango.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='mango.css') }}">
     <script src="{{ url_for('static', filename='mango.js') }}" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- AJAX -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDoList</title>
@@ -11,7 +12,9 @@
 <body>
     <div style="color: white; padding-left: 2vw; font-size: 30px;">ToDoList</div>
     <div class="mainbox">
-    <div class="centered">Textbox -> add to list methods</div>
+    <div class="centered">Textbox -> add to list methods <input type="text" id="taskInput">
+        <button onclick="addTask()">Add task</button>
+    </div>
     <div class="txtclr">Div/Table to hold different ToDo's<br>
     <table style="align-self: left;">
         <tr>
