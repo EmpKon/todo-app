@@ -15,3 +15,9 @@ function addTask() { //Adds a task to the sqlite database
 
 
 }
+
+function displayTasks() {
+    var table = document.getElementById("taskable")
+
+
+}
