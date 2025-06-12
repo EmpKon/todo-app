@@ -13,15 +13,28 @@ cursor.close()
 def appgoeshere():
     return render_template("index.html")
 
-@app.route("/addData", methods=["POST"])
+@app.route("/addData", methods=["POST"]) #Route for adding tasks into the database
 def addData():
     data = request.get_json()
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
-    cursor.execute(f"INSERT INTO tasks (Task, Status) VALUES ('{data["value"]}', 'Incomplete')")
+    taskname = data["value"]
+    print(cursor.execute(f"INSERT INTO tasks (Task, Status) VALUES ('{taskname}', 'Incomplete')"))
     cursor.close()
+    con.commit()
     con.close()
+    getData()
     return jsonify()
+
+@app.route("/getData", methods=["GET"]) #Route for getting data from the db, returns everything in the database
+def getData():
+    con = sqlite3.connect("tasks.db")   
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM tasks")
+    DBData = cursor.fetchall()
+    print(DBData)
+    return jsonify(DBData)
+
 
 
 
