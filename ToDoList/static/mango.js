@@ -13,21 +13,29 @@ function addTask() { //Adds a task to the sqlite database
             console.log(error);
         }
     })
-
-
+    setTimeout(displayTasks, 100); //Slight delay to account for the time that it takes for the task to get added to the sqlite db
 }
 
 function displayTasks() { 
     fetch("/getData") //Fetches all the saved tasks from the database
         .then(data => data.json())
         .then(data => {
-            console.log(data); //Prints tasks to console
-            for (let i = 0; i < data.length; i++) { //For loop that goes over all the items in the array and adds them to the table
-            document.getElementById("taskTable").innerHTML += //Suddenly works after fixing a typo ToT
-            `<tr>
+            console.log(data);
+            document.getElementById("taskTable").innerHTML = ""
+            for (let i = 0; i < data.length; i++) { //Adds tasks to table
+                document.getElementById("taskTable").innerHTML += //Suddenly works after fixing a typo ToT
+                `<tr>
                 <td>
-                    ${data[i]}
+                ${data[i][1]}&emsp;&emsp;&emsp; <button onclick="console.log('${data[i][0]}')">Delete</button>
                 </td>
-            </tr>`
-        }});
-}
+                </tr>` //TODO: Make clearTask function for this to remove from db
+            }});
+        }
+
+window.addEventListener("DOMContentLoaded", (event) => {
+    document.getElementById("taskInput").addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && document.getElementById("taskInput").value != "") {
+            document.getElementById("addButton").click();
+        }
+    });
+});
