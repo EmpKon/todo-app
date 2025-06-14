@@ -18,11 +18,16 @@ function addTask() { //Adds a task to the sqlite database
 }
 
 function displayTasks() { 
-    var table = document.getElementById("taskable")
     fetch("/getData") //Fetches all the saved tasks from the database
         .then(data => data.json())
         .then(data => {
-            console.log(data);
-        });
-
+            console.log(data); //Prints tasks to console
+            for (let i = 0; i < data.length; i++) { //For loop that goes over all the items in the array and adds them to the table
+            document.getElementById("taskTable").innerHTML += //Suddenly works after fixing a typo ToT
+            `<tr>
+                <td>
+                    ${data[i]}
+                </td>
+            </tr>`
+        }});
 }
