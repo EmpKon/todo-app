@@ -1,3 +1,10 @@
+stateCycle = {
+    "not_started": "in_progress",
+    "in_progress": "complete",
+    "complete": "not_started"
+};
+
+
 function addTask() { //Adds a task to the sqlite database 
     var value = document.getElementById("taskInput").value;
     document.getElementById("taskInput").value = "";
@@ -13,7 +20,7 @@ function addTask() { //Adds a task to the sqlite database
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 100); //Slight delay to account for the time that it takes for the task to get added to the sqlite db
+    setTimeout(displayTasks, 5); //Slight delay to account for the time that it takes for the task to get added to the sqlite db
 }
 
 function removeData(taskID) {
@@ -29,8 +36,26 @@ function removeData(taskID) {
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 100); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
+    setTimeout(displayTasks, 5); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
 }
+
+function cycleStatus(taskID, status) {
+    let newstatus = stateCycle[status]
+        $.ajax({
+        url: "/cycleStatus",
+        type: "POST",
+        contentType: 'application/json',
+        data: JSON.stringify({ "id" : taskID, "status" : newstatus}),
+        success: function(response) {
+            console.log("Status changed")
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+    setTimeout(displayTasks, 5); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
+}
+
 
 function displayTasks() { 
     fetch("/getData") //Fetches all the saved tasks from the database
@@ -42,9 +67,9 @@ function displayTasks() {
                 document.getElementById("taskTable").innerHTML += //Suddenly works after fixing a typo ToT
                 `<tr>
                 <td>
-                ${data[i][1]}&emsp;&emsp;&emsp; <button onclick="removeData(${data[i][0]})">Delete</button>
+                ${data[i][1]}&emsp;&emsp;&emsp; status=${data[i][2]}&emsp;&emsp;&emsp; <button onclick="removeData(${data[i][0]})">Delete</button><button onclick="cycleStatus(${data[i][0]}, '${data[i][2]}')">Cycle</button>
                 </td>
-                </tr>` //TODO: Make clearTask function for this to remove from db
+                </tr>`
             }});
         }
 

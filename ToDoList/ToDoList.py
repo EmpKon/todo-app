@@ -19,7 +19,7 @@ def addData():
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
     taskname = data["value"]
-    print(cursor.execute(f"INSERT INTO tasks (Task, Status) VALUES ('{taskname}', 'Incomplete')"))
+    print(cursor.execute(f"INSERT INTO tasks (Task, Status) VALUES ('{taskname}', 'not_started')"))
     cursor.close()
     con.commit()
     con.close()
@@ -40,6 +40,21 @@ def removeData():
     getData()
     return jsonify()
 
+@app.route("/cycleStatus", methods=["POST"]) #Route for changing the status of the task
+def cycleStatus():
+    data = request.get_json()
+    taskID = data["id"]
+    status = data["status"]
+    con = sqlite3.connect("tasks.db")
+    cursor = con.cursor()
+    print(cursor.execute(f"UPDATE tasks SET Status = '{status}' WHERE id={taskID}"))
+    cursor.close()
+    con.commit()
+    con.close()
+    getData()
+    return jsonify()
+    
+
 @app.route("/getData", methods=["GET"]) #Route for getting data from the db, returns everything in the database
 def getData():
     con = sqlite3.connect("tasks.db")   
@@ -48,8 +63,6 @@ def getData():
     DBData = cursor.fetchall()
     print(DBData)
     return jsonify(DBData)
-
-
 
 
 if __name__=="__main__":
