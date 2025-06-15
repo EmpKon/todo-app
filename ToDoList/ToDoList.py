@@ -26,6 +26,20 @@ def addData():
     getData()
     return jsonify()
 
+
+@app.route("/removeData", methods=["POST"]) #Route for removing tasks from the database
+def removeData():
+    data = request.get_json()
+    taskID = data["id"]
+    con = sqlite3.connect("tasks.db")
+    cursor = con.cursor()
+    print(cursor.execute(f"Delete FROM tasks WHERE id={taskID}"))
+    cursor.close()
+    con.commit()
+    con.close()
+    getData()
+    return jsonify()
+
 @app.route("/getData", methods=["GET"]) #Route for getting data from the db, returns everything in the database
 def getData():
     con = sqlite3.connect("tasks.db")   

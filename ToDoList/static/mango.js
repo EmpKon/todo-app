@@ -12,8 +12,24 @@ function addTask() { //Adds a task to the sqlite database
         error: function(error) {
             console.log(error);
         }
-    })
+    });
     setTimeout(displayTasks, 100); //Slight delay to account for the time that it takes for the task to get added to the sqlite db
+}
+
+function removeData(taskID) {
+        $.ajax({
+        url: "/removeData",
+        type: "POST",
+        contentType: 'application/json',
+        data: JSON.stringify({ "id" : taskID }),
+        success: function(response) {
+            console.log("Task removed")
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+    setTimeout(displayTasks, 100); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
 }
 
 function displayTasks() { 
@@ -26,7 +42,7 @@ function displayTasks() {
                 document.getElementById("taskTable").innerHTML += //Suddenly works after fixing a typo ToT
                 `<tr>
                 <td>
-                ${data[i][1]}&emsp;&emsp;&emsp; <button onclick="console.log('${data[i][0]}')">Delete</button>
+                ${data[i][1]}&emsp;&emsp;&emsp; <button onclick="removeData(${data[i][0]})">Delete</button>
                 </td>
                 </tr>` //TODO: Make clearTask function for this to remove from db
             }});
