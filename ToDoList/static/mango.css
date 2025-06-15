@@ -26,3 +26,20 @@ body {
     padding-top: 10vh;
     background-color: #4A102A;
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.not_started {
+    color: black;
+}
+
+.complete {
+    color: #FCF259;
+}
+
+.in_progress {
+    color: #cfc64a
+}

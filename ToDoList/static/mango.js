@@ -66,10 +66,13 @@ function displayTasks() {
             for (let i = 0; i < data.length; i++) { //Adds tasks to table
                 document.getElementById("taskTable").innerHTML += //Suddenly works after fixing a typo ToT
                 `<tr>
-                <td>
-                ${data[i][1]}&emsp;&emsp;&emsp; status=${data[i][2]}&emsp;&emsp;&emsp; <button onclick="removeData(${data[i][0]})">Delete</button><button onclick="cycleStatus(${data[i][0]}, '${data[i][2]}')">Cycle</button>
+                <td class="${data[i][2]}">
+                <a href="#" onclick="cycleStatus(${data[i][0]}, '${data[i][2]}')">
+                ${data[i][1]}&emsp;&emsp;&emsp; ${data[i][2]}&emsp;&emsp;&emsp; <button onclick="removeData(${data[i][0]})">Delete</button>
+                </a>
                 </td>
-                </tr>`
+                </tr>
+                `
             }});
         }
 
