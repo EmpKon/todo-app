@@ -20,7 +20,7 @@ function addTask() { //Adds a task to the sqlite database
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 5); //Slight delay to account for the time that it takes for the task to get added to the sqlite db
+    setTimeout(displayTasks, 10); //Slight delay to account for the time that it takes for the task to get added to the sqlite db
 }
 
 function removeData(taskID) {
@@ -36,7 +36,7 @@ function removeData(taskID) {
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 5); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
+    setTimeout(displayTasks, 10); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
 }
 
 function cycleStatus(taskID, status) {
@@ -53,7 +53,7 @@ function cycleStatus(taskID, status) {
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 5); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
+    setTimeout(displayTasks, 10); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
 }
 
 
