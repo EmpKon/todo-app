@@ -10,16 +10,21 @@
     <title>ToDoList</title>
 </head>
 <body onload="displayTasks()">
+
+    <div class="sidebar">
+        <div class="sidebarBG"></div>
+        <a href="#" onclick="setTheme('0')">theme 1</a>
+        <a href="#" onclick="setTheme('1')">theme 2</a>
+        <a href="#" onclick="setTheme('2')">theme 3</a>
+        <a href="#" onclick="setTheme('3')">theme 4</a>
+        <a href="#" onclick="setTheme('4')">theme 5</a>
+    </div>
+
     <div style="color: white; padding-left: 2vw; font-size: 30px;">ToDoList</div>
     <div class="mainbox">
-    <div class="centered bscPad" >
+    <div class="centered bscPad">
         <input type="text" id="taskInput">
         <button onclick="addTask()" id="addButton" class="button">Add task</button>
-        <button onclick="setTheme('1')">Theme 1</button>
-        <button onclick="setTheme('2')">Theme 2</button>
-        <button onclick="setTheme('3')">Theme 3</button>
-        <button onclick="setTheme('4')">Theme 4</button>
-        <button onclick="setTheme('5')">Theme 5</button>
     </div>
     <div class="txtclr"><br>
     <table style="align-self: left;" id="taskTable">

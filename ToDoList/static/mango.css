@@ -20,6 +20,41 @@
     color: var(--txtColor);
 }
 
+.sidebarBG {
+    position: fixed;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    padding: 6px;
+    height: 100%;
+    width: 6vw;
+    background-color: var(--bgColor);
+    filter: brightness(60%);
+}
+
+.sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    height: 100%;
+    width: 6vw;
+    font-size: 25px;
+    top: 0;
+    left: 0;
+    filter: brightness(90%);
+    border-right: 3px solid var(--accentColor);
+}
+
+.sidebar a {
+    display: inline-block;
+    padding: 30px;
+    padding-left: 10px;
+    white-space: nowrap;
+    color: var(--txtColor);
+    z-index: 1;
+}
+
 .mainbox {
     padding: 10px;
     border-style: solid;
@@ -36,8 +71,12 @@
     padding: 8px;
 }
 
-.button {
-    border: 2px solid green
+/*.button {
+    border: 2px solid red
+}*/
+
+html {
+    height: 100%;
 }
 
 body {
@@ -62,4 +101,8 @@ a {
 
 .in_progress {
     color: var(--progressColor)
+}
+
+.taskItem {
+    padding: 10px;
 }
