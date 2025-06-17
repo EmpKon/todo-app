@@ -1,30 +1,50 @@
+:root {
+    --bgColor: #4A102A;
+    --boxbgColor: #85193C;
+    --accentColor: #C5172E;
+    --txtColor: #FCF259;
+    --progressColor: #cfc64a;
+}
+
 .centered {
     display: grid;
     place-items: center;
-    color: #FCF259;
+    color: var(--txtColor);
     border-style: dashed;
-    border-color: #C5172E;
+    border-color: var(--accentColor);
     border-width: 1px;
     border-radius: 1px;
 }
 
 .txtclr {
-    color: #FCF259;
+    color: var(--txtColor);
 }
 
 .mainbox {
     padding: 10px;
     border-style: solid;
     border-radius: 5px;
-    border-color: #C5172E;
-    background-color: #85193C;
+    border-color: var(--accentColor);
+    background-color: var(--boxbgColor);
+}
+
+.taskItem {
+    font-size: 20px;
+}
+
+.bscPad {
+    padding: 8px;
+}
+
+.button {
+    border: 2px solid green
 }
 
 body {
     padding-left: 10vw;
     padding-right: 10vw;
     padding-top: 10vh;
-    background-color: #4A102A;
+    background-color: var(--bgColor);
 }
 
 a {
@@ -37,9 +57,9 @@ a {
 }
 
 .complete {
-    color: #FCF259;
+    color: var(--txtColor);
 }
 
 .in_progress {
-    color: #cfc64a
+    color: var(--progressColor)
 }

@@ -4,6 +4,23 @@ stateCycle = {
     "complete": "not_started"
 };
 
+themes = [
+    ["#4A102A", "#85193C", "#C5172E", "#FCF259", "#cfc64a"],
+    ["#B33791", "#C562AF", "#DB8DD0", "#FEC5F6", "#cfc64a"],
+    ["#FFB200", "#EB5B00", "#D91656", "#640D5F", "#cfc64a"],
+    ["#FDFBEE", "#57B4BA", "#015551", "#FE4F2D", "#cfc64a"],
+    ["#FBDB93", "#BE5B50", "#8A2D3B", "#641B2E", "#cfc64a"]
+]
+
+var r = document.querySelector(':root');
+
+function setTheme(index) {
+    r.style.setProperty('--bgColor', themes[index][0]);
+    r.style.setProperty('--boxbgColor', themes[index][1]);
+    r.style.setProperty('--accentColor', themes[index][2]);    
+    r.style.setProperty('--txtColor', themes[index][3]);
+    r.style.setProperty('--progressColor', themes[index][4]);
+}
 
 function addTask() { //Adds a task to the sqlite database 
     var value = document.getElementById("taskInput").value;
@@ -66,7 +83,7 @@ function displayTasks() {
             for (let i = 0; i < data.length; i++) { //Adds tasks to table
                 document.getElementById("taskTable").innerHTML += //Suddenly works after fixing a typo ToT
                 `<tr>
-                <td class="${data[i][2]}">
+                <td class="${data[i][2]} taskItem">
                 <a href="#" onclick="cycleStatus(${data[i][0]}, '${data[i][2]}')">
                 ${data[i][1]}&emsp;&emsp;&emsp; ${data[i][2]}&emsp;&emsp;&emsp; <button onclick="removeData(${data[i][0]})">Delete</button>
                 </a>
