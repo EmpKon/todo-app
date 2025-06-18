@@ -22,6 +22,10 @@ function setTheme(index) {
     r.style.setProperty('--progressColor', themes[index][4]);
 }
 
+function makePalette(index) {
+    
+}
+
 function addTask() { //Adds a task to the sqlite database 
     var value = document.getElementById("taskInput").value;
     document.getElementById("taskInput").value = "";

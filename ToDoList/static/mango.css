@@ -42,7 +42,7 @@
     font-size: 25px;
     top: 0;
     left: 0;
-    filter: brightness(90%);
+    filter: brightness(100%);
     border-right: 3px solid var(--accentColor);
 }
 
@@ -51,9 +51,31 @@
     padding: 30px;
     padding-left: 10px;
     white-space: nowrap;
-    color: var(--txtColor);
+    text-shadow: 2px 2px rgb(0, 0, 0);
+/*    color: var(--txtColor);*/
     z-index: 1;
 }
+
+.sidebar a:nth-of-type(1) {
+    color: #FCF259;
+}
+
+.sidebar a:nth-of-type(2) {
+    color: #FEC5F6;
+}
+
+.sidebar a:nth-of-type(3) {
+    color: #640D5F;
+}
+
+.sidebar a:nth-of-type(4) {
+    color: #FE4F2D;
+}
+
+.sidebar a:nth-of-type(5) {
+    color: #641B2E;
+}
+
 
 .mainbox {
     padding: 10px;
