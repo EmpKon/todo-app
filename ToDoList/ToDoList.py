@@ -78,13 +78,19 @@ def moveTask():
     pos = data["pos"]
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
-    print(cursor.execute(f"UPDATE tasks SET Pos = '0' WHERE Pos={pos}"))
-    if direction == "down":
-        cursor.execute(f"UPDATE tasks SET Pos = '{pos}' WHERE Pos={pos+1}")
-        cursor.execute(f"UPDATE tasks SET Pos = '{pos+1}' WHERE Pos=0")
+    cursor.execute(f"SELECT COUNT(*) FROM tasks")
+    itemcount = cursor.fetchone()[0]
+    print(direction, itemcount, pos)
+    if direction == "down" and pos == itemcount or direction == "up" and pos == 1:
+        pass
     else:
-        cursor.execute(f"UPDATE tasks SET Pos = '{pos}' WHERE Pos={pos-1}")
-        cursor.execute(f"UPDATE tasks SET Pos = '{pos-1}' WHERE Pos=0")
+        print(cursor.execute(f"UPDATE tasks SET Pos = '0' WHERE Pos={pos}"))
+        if direction == "down":
+            cursor.execute(f"UPDATE tasks SET Pos = '{pos}' WHERE Pos={pos+1}")
+            cursor.execute(f"UPDATE tasks SET Pos = '{pos+1}' WHERE Pos=0")
+        else:
+            cursor.execute(f"UPDATE tasks SET Pos = '{pos}' WHERE Pos={pos-1}")
+            cursor.execute(f"UPDATE tasks SET Pos = '{pos-1}' WHERE Pos=0")
     cursor.close()
     con.commit()
     con.close()
