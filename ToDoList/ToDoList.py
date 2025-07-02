@@ -21,8 +21,7 @@ def addData():
     taskname = data["value"]
     cursor.execute(f"SELECT COUNT(*) FROM tasks") #Gets the amount of items in the database
     itemcount = cursor.fetchone()[0]
-    print("itemcount = ", itemcount)
-    print(cursor.execute(f"INSERT INTO tasks (Pos, Task, Status) VALUES ('{itemcount+1}', '{taskname}', 'not_started')"))
+    cursor.execute(f"INSERT INTO tasks (Pos, Task, Status) VALUES ('{itemcount+1}', '{taskname}', 'not_started')")
     cursor.close()
     con.commit()
     con.close()
@@ -32,12 +31,11 @@ def addData():
 
 @app.route("/removeData", methods=["POST"]) #Route for removing tasks from the database
 def removeData():
-    print("DELETE")
     data = request.get_json()
     taskPos = data["pos"]
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
-    print(cursor.execute(f"Delete FROM tasks WHERE Pos={taskPos}"))
+    cursor.execute(f"Delete FROM tasks WHERE Pos={taskPos}")
     cursor.execute(f"UPDATE tasks SET Pos = Pos - 1 WHERE Pos > {taskPos}")
     cursor.close()
     con.commit()
@@ -47,13 +45,12 @@ def removeData():
 
 @app.route("/cycleStatus", methods=["POST"]) #Route for changing the status of the task
 def cycleStatus():
-    print("CYCLE")
     data = request.get_json()
     taskPos = data["Pos"]
     status = data["status"]
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
-    print(cursor.execute(f"UPDATE tasks SET Status = '{status}' WHERE Pos={taskPos}"))
+    cursor.execute(f"UPDATE tasks SET Status = '{status}' WHERE Pos={taskPos}")
     cursor.close()
     con.commit()
     con.close()
@@ -67,12 +64,10 @@ def getData():
     cursor = con.cursor()
     cursor.execute("SELECT * FROM tasks ORDER BY Pos")
     DBData = cursor.fetchall()
-    print(DBData)
     return jsonify(DBData)
 
 @app.route("/moveTask", methods=["POST"]) #Route for reordering a task
 def moveTask():
-    print("MOVE")
     data = request.get_json()
     direction = data["direction"]
     pos = data["pos"]
@@ -80,11 +75,10 @@ def moveTask():
     cursor = con.cursor()
     cursor.execute(f"SELECT COUNT(*) FROM tasks")
     itemcount = cursor.fetchone()[0]
-    print(direction, itemcount, pos)
     if direction == "down" and pos == itemcount or direction == "up" and pos == 1:
         pass
     else:
-        print(cursor.execute(f"UPDATE tasks SET Pos = '0' WHERE Pos={pos}"))
+        cursor.execute(f"UPDATE tasks SET Pos = '0' WHERE Pos={pos}")
         if direction == "down":
             cursor.execute(f"UPDATE tasks SET Pos = '{pos}' WHERE Pos={pos+1}")
             cursor.execute(f"UPDATE tasks SET Pos = '{pos+1}' WHERE Pos=0")
