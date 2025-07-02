@@ -44,12 +44,12 @@ function addTask() { //Adds a task to the sqlite database
     setTimeout(displayTasks, 10); //Slight delay to account for the time that it takes for the task to get added to the sqlite db
 }
 
-function removeData(taskID) {
+function removeData(taskPos) {
         $.ajax({
         url: "/removeData",
         type: "POST",
         contentType: 'application/json',
-        data: JSON.stringify({ "id" : taskID }),
+        data: JSON.stringify({ "Pos" : taskPos }),
         success: function(response) {
             console.log("Task removed")
         },
@@ -60,13 +60,13 @@ function removeData(taskID) {
     setTimeout(displayTasks, 10); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
 }
 
-function cycleStatus(taskID, status) {
+function cycleStatus(taskPos, status) {
     let newstatus = stateCycle[status]
         $.ajax({
         url: "/cycleStatus",
         type: "POST",
         contentType: 'application/json',
-        data: JSON.stringify({ "id" : taskID, "status" : newstatus}),
+        data: JSON.stringify({ "Pos" : taskPos, "status" : newstatus}),
         success: function(response) {
             console.log("Status changed")
         },
@@ -89,8 +89,7 @@ function displayTasks() {
                 `<tr>
                 <td class="${data[i][2]} taskItem">
                 <a href="#" onclick="cycleStatus(${data[i][0]}, '${data[i][2]}')">
-                ${data[i][1]}&emsp;&emsp;&emsp; ${data[i][2]}&emsp;&emsp;&emsp; <button onclick="removeData(${data[i][0]})">Delete</button>
-                </a>
+                ${data[i][1]}&emsp;&emsp;&emsp; ${data[i][2]}&emsp;&emsp;&emsp;</a> <button onclick="removeData(${data[i][0]})">Delete</button>
                 </td>
                 </tr>
                 `

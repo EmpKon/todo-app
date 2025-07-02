@@ -10,7 +10,7 @@
     display: grid;
     place-items: center;
     color: var(--txtColor);
-    border-style: dashed;
+    border-style: solid;
     border-color: var(--accentColor);
     border-width: 1px;
     border-radius: 1px;
@@ -32,11 +32,10 @@
 }
 
 .sidebarBG::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  pointer-events: none;
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .sidebar {

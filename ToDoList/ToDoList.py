@@ -5,7 +5,7 @@ app = Flask(__name__, static_url_path='', static_folder='static')
 con = sqlite3.connect("tasks.db")
 
 cursor = con.cursor()
-cursor.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, Task TEXT, Status TEXT)")
+cursor.execute("CREATE TABLE IF NOT EXISTS tasks (Pos INTEGER, Task TEXT, Status TEXT)")
 cursor.close()
 
 
@@ -19,7 +19,10 @@ def addData():
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
     taskname = data["value"]
-    print(cursor.execute(f"INSERT INTO tasks (Task, Status) VALUES ('{taskname}', 'not_started')"))
+    cursor.execute(f"SELECT COUNT(*) FROM tasks") #Gets the amount of items in the database
+    itemcount = cursor.fetchone()[0]
+    print("itemcount = ", itemcount)
+    print(cursor.execute(f"INSERT INTO tasks (Pos, Task, Status) VALUES ('{itemcount+1}', '{taskname}', 'not_started')"))
     cursor.close()
     con.commit()
     con.close()
@@ -29,11 +32,13 @@ def addData():
 
 @app.route("/removeData", methods=["POST"]) #Route for removing tasks from the database
 def removeData():
+    print("DELETE")
     data = request.get_json()
-    taskID = data["id"]
+    taskPos = data["Pos"]
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
-    print(cursor.execute(f"Delete FROM tasks WHERE id={taskID}"))
+    print(cursor.execute(f"Delete FROM tasks WHERE Pos={taskPos}"))
+    cursor.execute(f"UPDATE tasks SET Pos = Pos - 1 WHERE Pos > {taskPos}")
     cursor.close()
     con.commit()
     con.close()
@@ -42,12 +47,13 @@ def removeData():
 
 @app.route("/cycleStatus", methods=["POST"]) #Route for changing the status of the task
 def cycleStatus():
+    print("CYCLE")
     data = request.get_json()
-    taskID = data["id"]
+    taskPos = data["Pos"]
     status = data["status"]
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
-    print(cursor.execute(f"UPDATE tasks SET Status = '{status}' WHERE id={taskID}"))
+    print(cursor.execute(f"UPDATE tasks SET Status = '{status}' WHERE Pos={taskPos}"))
     cursor.close()
     con.commit()
     con.close()
