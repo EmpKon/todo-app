@@ -32,9 +32,9 @@ function addTask() { //Adds a task to the sqlite database
     $.ajax({
         url: "/addData",
         type: "POST",
-        contentType: 'application/json',
-        data: JSON.stringify({ 'value': value }),
-        success: function(response) {
+        contentType: "application/json",
+        data: JSON.stringify({"value": value }),
+        success: function() {
             console.log("Task added!")
         },
         error: function(error) {
@@ -48,16 +48,16 @@ function removeData(taskPos) {
         $.ajax({
         url: "/removeData",
         type: "POST",
-        contentType: 'application/json',
-        data: JSON.stringify({ "Pos" : taskPos }),
-        success: function(response) {
+        contentType: "application/json",
+        data: JSON.stringify({"pos" : taskPos }),
+        success: function() {
             console.log("Task removed")
         },
         error: function(error) {
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 10); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
+    setTimeout(displayTasks, 10);
 }
 
 function cycleStatus(taskPos, status) {
@@ -65,16 +65,33 @@ function cycleStatus(taskPos, status) {
         $.ajax({
         url: "/cycleStatus",
         type: "POST",
-        contentType: 'application/json',
-        data: JSON.stringify({ "Pos" : taskPos, "status" : newstatus}),
-        success: function(response) {
+        contentType: "application/json",
+        data: JSON.stringify({"Pos" : taskPos, "status" : newstatus}),
+        success: function() {
             console.log("Status changed")
         },
         error: function(error) {
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 10); //Slight delay to account for the time that it takes for the task to get deleted from the sqlite db
+    setTimeout(displayTasks, 10);
+}
+
+
+function moveTask(taskPos, direction) {
+        $.ajax({
+        url: "/moveTask",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({"pos" : taskPos, "direction" : direction}),
+        success: function() {
+            console.log("Task reordered")
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+    setTimeout(displayTasks, 10);
 }
 
 
@@ -89,7 +106,7 @@ function displayTasks() {
                 `<tr>
                 <td class="${data[i][2]} taskItem">
                 <a href="#" onclick="cycleStatus(${data[i][0]}, '${data[i][2]}')">
-                ${data[i][1]}&emsp;&emsp;&emsp; ${data[i][2]}&emsp;&emsp;&emsp;</a> <button onclick="removeData(${data[i][0]})">Delete</button>
+                ${data[i][1]}&emsp;&emsp;&emsp; ${data[i][2]}&emsp;&emsp;&emsp;</a> <button onclick="removeData(${data[i][0]})">Delete</button> <button onclick="moveTask(${data[i][0]}, 'up')"><i class="arrow up"></i></button> <button onclick="moveTask(${data[i][0]}, 'down')"><i class="arrow down"></i></button>
                 </td>
                 </tr>
                 `

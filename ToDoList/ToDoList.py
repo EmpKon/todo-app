@@ -34,7 +34,7 @@ def addData():
 def removeData():
     print("DELETE")
     data = request.get_json()
-    taskPos = data["Pos"]
+    taskPos = data["pos"]
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
     print(cursor.execute(f"Delete FROM tasks WHERE Pos={taskPos}"))
@@ -65,10 +65,31 @@ def cycleStatus():
 def getData():
     con = sqlite3.connect("tasks.db")   
     cursor = con.cursor()
-    cursor.execute("SELECT * FROM tasks")
+    cursor.execute("SELECT * FROM tasks ORDER BY Pos")
     DBData = cursor.fetchall()
     print(DBData)
     return jsonify(DBData)
+
+@app.route("/moveTask", methods=["POST"]) #Route for reordering a task
+def moveTask():
+    print("MOVE")
+    data = request.get_json()
+    direction = data["direction"]
+    pos = data["pos"]
+    con = sqlite3.connect("tasks.db")
+    cursor = con.cursor()
+    print(cursor.execute(f"UPDATE tasks SET Pos = '0' WHERE Pos={pos}"))
+    if direction == "down":
+        cursor.execute(f"UPDATE tasks SET Pos = '{pos}' WHERE Pos={pos+1}")
+        cursor.execute(f"UPDATE tasks SET Pos = '{pos+1}' WHERE Pos=0")
+    else:
+        cursor.execute(f"UPDATE tasks SET Pos = '{pos}' WHERE Pos={pos-1}")
+        cursor.execute(f"UPDATE tasks SET Pos = '{pos-1}' WHERE Pos=0")
+    cursor.close()
+    con.commit()
+    con.close()
+    getData()
+    return jsonify()
 
 
 if __name__=="__main__":
