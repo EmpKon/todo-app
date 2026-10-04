@@ -21,7 +21,9 @@ def addData():
     taskname = data["value"]
     cursor.execute(f"SELECT COUNT(*) FROM tasks") #Gets the amount of items in the database
     itemcount = cursor.fetchone()[0]
-    cursor.execute(f"INSERT INTO tasks (Pos, Task, Status) VALUES ('{itemcount+1}', '{taskname}', 'not_started')")
+    cursor.execute(f"INSERT INTO tasks (Pos, Task, Status) VALUES (?,?,?)",
+    (itemcount + 1, taskname, "not_started")
+    )
     cursor.close()
     con.commit()
     con.close()
@@ -35,8 +37,10 @@ def removeData():
     taskPos = data["pos"]
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
-    cursor.execute(f"Delete FROM tasks WHERE Pos={taskPos}")
-    cursor.execute(f"UPDATE tasks SET Pos = Pos - 1 WHERE Pos > {taskPos}")
+    cursor.execute(f"Delete FROM tasks WHERE Pos=?",
+    (taskPos))
+    cursor.execute(f"UPDATE tasks SET Pos = Pos - 1 WHERE Pos > ?",
+    (taskPos))
     cursor.close()
     con.commit()
     con.close()
@@ -50,7 +54,8 @@ def cycleStatus():
     status = data["status"]
     con = sqlite3.connect("tasks.db")
     cursor = con.cursor()
-    cursor.execute(f"UPDATE tasks SET Status = '{status}' WHERE Pos={taskPos}")
+    cursor.execute(f"UPDATE tasks SET Status = '?' WHERE Pos=?",
+    (status, taskPos))
     cursor.close()
     con.commit()
     con.close()
