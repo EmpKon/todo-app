@@ -7,8 +7,6 @@ stateCycle = {
 themes = [
     ["#4A102A", "#85193C", "#C5172E", "#FCF259", "#cfc64a"],
     ["#B33791", "#C562AF", "#DB8DD0", "#FEC5F6", "#cfc64a"],
-    ["#FFB200", "#EB5B00", "#D91656", "#640D5F", "#cfc64a"],
-    ["#FDFBEE", "#57B4BA", "#015551", "#FE4F2D", "#cfc64a"],
     ["#FBDB93", "#BE5B50", "#8A2D3B", "#641B2E", "#cfc64a"]
 ]
 
@@ -101,7 +99,7 @@ function displayTasks() {
                 document.getElementById("taskTable").innerHTML += //Suddenly works after fixing a typo ToT
                 `<tr>
                 <td class="${data[i][2]} taskItem">
-                <a href="#" onclick="cycleStatus(${data[i][0]}, '${data[i][2]}')">
+                <a button type="button" class="taskStatus" onclick="cycleStatus(${data[i][0]}, '${data[i][2]}')">
                 ${data[i][1]}&emsp;&emsp;&emsp; ${data[i][2]}&emsp;&emsp;&emsp;</a> <button onclick="removeData(${data[i][0]})">Delete</button> <button onclick="moveTask(${data[i][0]}, 'up')"><i class="arrow up"></i></button> <button onclick="moveTask(${data[i][0]}, 'down')"><i class="arrow down"></i></button>
                 </td>
                 </tr>

@@ -90,14 +90,6 @@
 }
 
 .sidebar a:nth-of-type(3) {
-    background-image: linear-gradient(#FFB200, #EB5B00, #D91656, #640D5F, #cfc64a);
-}
-
-.sidebar a:nth-of-type(4) {
-    background-image: linear-gradient(#FDFBEE, #57B4BA, #015551, #FE4F2D, #cfc64a);
-}
-
-.sidebar a:nth-of-type(5) {
     background-image: linear-gradient(#FBDB93, #BE5B50, #8A2D3B, #641B2E, #cfc64a);
 }
 
@@ -112,6 +104,11 @@
 
 .taskItem {
     font-size: 20px;
+}
+
+.taskStatus {
+    cursor: pointer;
+    user-select: none;
 }
 
 .bscPad {
