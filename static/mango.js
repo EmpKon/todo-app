@@ -30,12 +30,12 @@ function addTask() { //Adds a task to the sqlite database
         data: JSON.stringify({"value": value }),
         success: function() {
             console.log("Task added!")
+            displayTasks()
         },
         error: function(error) {
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 10); //Slight delay to account for the time that it takes for the task to get added to the sqlite db
 }
 
 function removeData(taskPos) {
@@ -46,12 +46,12 @@ function removeData(taskPos) {
         data: JSON.stringify({"pos" : taskPos }),
         success: function() {
             console.log("Task removed")
+            displayTasks()
         },
         error: function(error) {
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 10);
 }
 
 function cycleStatus(taskPos, status) {
@@ -63,12 +63,12 @@ function cycleStatus(taskPos, status) {
         data: JSON.stringify({"pos" : taskPos, "status" : newstatus}),
         success: function() {
             console.log("Status changed")
+            displayTasks()
         },
         error: function(error) {
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 10);
 }
 
 
@@ -80,12 +80,12 @@ function moveTask(taskPos, direction) {
         data: JSON.stringify({"pos" : taskPos, "direction" : direction}),
         success: function() {
             console.log("Task reordered")
+            displayTasks()
         },
         error: function(error) {
             console.log(error);
         }
     });
-    setTimeout(displayTasks, 10);
 }
 
 
