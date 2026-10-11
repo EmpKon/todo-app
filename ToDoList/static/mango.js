@@ -1,7 +1,7 @@
 stateCycle = {
     "not_started": "in_progress",
-    "in_progress": "complete",
-    "complete": "not_started"
+    "in_progress": "completed",
+    "completed": "not_started"
 };
 
 themes = [
@@ -24,7 +24,7 @@ function addTask() { //Adds a task to the sqlite database
     var value = document.getElementById("taskInput").value;
     document.getElementById("taskInput").value = "";
     $.ajax({
-        url: "/addData",
+        url: "/data",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({"value": value }),
@@ -40,8 +40,8 @@ function addTask() { //Adds a task to the sqlite database
 
 function removeData(taskPos) {
         $.ajax({
-        url: "/removeData",
-        type: "POST",
+        url: "/data",
+        type: "DELETE",
         contentType: "application/json",
         data: JSON.stringify({"pos" : taskPos }),
         success: function() {
@@ -60,7 +60,7 @@ function cycleStatus(taskPos, status) {
         url: "/cycleStatus",
         type: "POST",
         contentType: "application/json",
-        data: JSON.stringify({"Pos" : taskPos, "status" : newstatus}),
+        data: JSON.stringify({"pos" : taskPos, "status" : newstatus}),
         success: function() {
             console.log("Status changed")
         },
@@ -89,7 +89,7 @@ function moveTask(taskPos, direction) {
 }
 
 
-function displayTasks() { 
+function displayTasks() { //TODO stop appending straight to innerHTML  
     fetch("/getData") //Fetches all the saved tasks from the database
         .then(data => data.json())
         .then(data => {
