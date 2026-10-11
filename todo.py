@@ -15,7 +15,7 @@ def isPositiveInt(val):
 
 def getJsonData():
     if not request.is_json:
-        return None, (jsonify({"error": "Content-Type must be applciation/json"}), 415)
+        return None, (jsonify({"error": "Content-Type must be application/json"}), 415)
 
     try:
         data = request.get_json()
@@ -111,7 +111,6 @@ def cycleStatus():
     if error:
         return error
 
-    data = request.get_json()
     taskPos = data.get("pos")
     status = data.get("status")
 
@@ -168,9 +167,6 @@ def moveTask():
         cursor = con.cursor()
         cursor.execute("SELECT COUNT(*) FROM tasks")
         itemcount = cursor.fetchone()[0]
-
-        cursor.execute("UPDATE tasks SET Pos = 0 WHERE Pos=?",
-        (taskPos,))
 
         if taskPos > itemcount:
             return jsonify({"error": "Task not found"}), 404
