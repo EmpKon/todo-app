@@ -9,6 +9,7 @@ con = sqlite3.connect("tasks.db")
 cursor = con.cursor()
 cursor.execute("CREATE TABLE IF NOT EXISTS tasks (Pos INTEGER, Task TEXT, Status TEXT)")
 cursor.close()
+con.close()
 
 def isPositiveInt(val):
     return (isinstance(val,int) and val>0 and not isinstance(val,bool))
